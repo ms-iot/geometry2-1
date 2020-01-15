@@ -9,10 +9,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-if(NOT ANDROID)
-  set(TF2_PY tf2_py)
-endif()
-
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(message_filters REQUIRED)
@@ -23,7 +19,6 @@ find_package(tf2_msgs REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
 include_directories(include)
-ament_python_install_package(${PROJECT_NAME} PACKAGE_DIR src/${PROJECT_NAME})
 
 # tf2_ros library
 add_library(${PROJECT_NAME} SHARED
@@ -204,20 +199,6 @@ add_rostest(test/transform_listener_time_reset_test.launch)
 
 endif()
 
-  # Python test
-  # Provides PYTHON_EXECUTABLE_DEBUG
-  find_package(python_cmake_module REQUIRED)
-  find_package(PythonExtra REQUIRED)
-
-  set(_PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}")
-  if(WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE_DEBUG}")
-  endif()
-
-  find_package(ament_cmake_pytest REQUIRED)
-  ament_add_pytest_test(tf2_ros_py_test test/py_test)
-
-  set(PYTHON_EXECUTABLE "${_PYTHON_EXECUTABLE}")
 endif()
 
 ament_export_include_directories(include)

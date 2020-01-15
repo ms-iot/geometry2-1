@@ -192,7 +192,7 @@ class TestBufferClient(unittest.TestCase):
             self.node, 'lookup_transform', check_frequency=10.0, timeout_padding=0.0)
 
         result = buffer_client.lookup_transform(
-            'foo', 'bar', rclpy.time.Time(), rclpy.duration.Duration(seconds=5.0))
+            'foo', 'bar', rclpy.time.Time().to_msg(), rclpy.duration.Duration(seconds=5.0))
 
         self.assertEqual(build_transform(
             'foo', 'bar', rclpy.time.Time().to_msg()), result)
@@ -203,7 +203,7 @@ class TestBufferClient(unittest.TestCase):
 
         with self.assertRaises(LookupException) as ex:
             result = buffer_client.lookup_transform(
-                'bar', 'baz', rclpy.time.Time(), rclpy.duration.Duration(seconds=5.0))
+                'bar', 'baz', rclpy.time.Time().to_msg(), rclpy.duration.Duration(seconds=5.0))
 
         self.assertEqual(LookupException, type(ex.exception))
 
