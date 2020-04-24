@@ -37,8 +37,8 @@
 
 #include <tf2/visibility_control.h>
 
-#if defined(_WIN32) && defined(ERROR)
-  #undef ERROR
+#if defined(_WIN32) && defined(NO_ERROR)
+  #undef NO_ERROR
 #endif
 
 namespace tf2{
